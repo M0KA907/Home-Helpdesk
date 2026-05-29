@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Household tech issue intake portal backed by Google Sheets.">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Home Helpdesk</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script defer src="./assets/app.js"></script>
+</head>
+<body>
+  <div class="scanline" aria-hidden="true"></div>
+  <main class="shell">
+    <section class="chrome">
+      <header class="topbar">
+        <div class="glyph" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <p class="kicker">HOME HELPDESK</p>
+          <h1>Household Issue Intake</h1>
+        </div>
+        <div class="status" id="endpointStatus">RECEIVER: LOCKED</div>
+      </header>
+
+      <section class="grid">
+        <aside class="side">
+          <b class="redline">QUEUE PROTOCOL</b>
+          <div class="nav active">SUBMIT TICKET</div>
+          <div class="nav">ANTI-BOT ARMOR</div>
+          <div class="nav">SHEET SYNC</div>
+          <div class="nav">HOUSEHOLD OPS</div>
+          <div class="telemetry">
+            <p><span>BOT TRAPS</span><b>ARMED</b></p>
+            <p><span>PROOF</span><b id="proofState">BUILDING</b></p>
+            <p><span>FORM AGE</span><b id="formAge">0s</b></p>
+          </div>
+          <button type="button" class="config" id="openConfig">RECEIVER SETUP</button>
+        </aside>
+
+        <section class="card">
+          <div class="cardhead">
+            <div>
+              <p class="kicker red">OPEN REQUEST</p>
+              <h2>What broke?</h2>
+            </div>
+            <div class="severity" id="severityPreview">NORMAL</div>
+          </div>
+
+          <form id="ticketForm" method="post" target="submitFrame" autocomplete="off" novalidate>
+            <input type="text" name="company" tabindex="-1" class="bot-field" aria-hidden="true" autocomplete="off">
+            <input type="url" name="website" tabindex="-1" class="bot-field" aria-hidden="true" autocomplete="off">
+            <input type="email" name="email_confirm" tabindex="-1" class="bot-field" aria-hidden="true" autocomplete="off">
+
+            <input type="hidden" name="started_at" id="startedAt">
+            <input type="hidden" name="visitor_id" id="visitorId">
+            <input type="hidden" name="challenge_a" id="challengeA">
+            <input type="hidden" name="challenge_b" id="challengeB">
+            <input type="hidden" name="challenge_op" id="challengeOp">
+            <input type="hidden" name="challenge_answer" id="challengeAnswer">
+            <input type="hidden" name="pow_nonce" id="powNonce">
+            <input type="hidden" name="pow_digest" id="powDigest">
+            <input type="hidden" name="submit_key" id="submitKey">
+            <input type="hidden" name="form_version" value="1.0.0">
+
+            <label class="field">
+              <span>Your name</span>
+              <input name="name" id="name" placeholder="Mom / Dad / Guest" maxlength="80">
+            </label>
+
+            <label class="field">
+              <span>Issue report</span>
+              <textarea name="issue" id="issue" required maxlength="2400" placeholder="Example: The printer says offline. I need to print something for work today. I tried turning it off and on."></textarea>
+            </label>
+
+            <div class="quickgrid">
+              <button type="button" class="quick" data-fill="The internet is not working. Wi-Fi says connected but nothing loads.">INTERNET DOWN</button>
+              <button type="button" class="quick" data-fill="The printer will not print. It says offline or stuck.">PRINTER STUCK</button>
+              <button type="button" class="quick" data-fill="The computer will not turn on or the screen is black.">BLACK SCREEN</button>
+              <button type="button" class="quick" data-fill="I got a strange email or message and I am worried it might be a scam.">SCAM CHECK</button>
+            </div>
+
+            <div class="challenge">
+              <div><b>HUMAN CHECK</b><p id="challengeText">Generating challenge...</p></div>
+              <input id="humanAnswer" inputmode="numeric" placeholder="Answer" maxlength="4" aria-label="Human check answer">
+            </div>
+
+            <button type="submit" id="submitButton" disabled><span>SEND REQUEST</span><em id="buttonSubtext">Preparing anti-bot proof...</em></button>
+          </form>
+
+          <iframe name="submitFrame" id="submitFrame" title="Submission result"></iframe>
+          <div class="result" id="resultBox" role="status" aria-live="polite"><b>Transmission queued.</b><span>Moka can review it in the household ticket Sheet.</span></div>
+          <p class="fine">Do not submit passwords, recovery codes, bank numbers, full SSNs, or private medical records.</p>
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <dialog id="configDialog">
+    <form method="dialog" class="dialog-card">
+      <h3>Receiver setup</h3>
+      <p>Private values are stored only in this browser's localStorage. They are not committed to the public repo.</p>
+      <label>Apps Script web app URL <input id="endpointInput" placeholder="Paste Apps Script web app URL"></label>
+      <label>Household submit key <input id="submitKeyInput" placeholder="Paste private key from Script Properties"></label>
+      <div class="dialog-actions"><button value="cancel" class="ghost">CANCEL</button><button id="saveConfig" value="default">SAVE</button></div>
+    </form>
+  </dialog>
+</body>
+</html>
