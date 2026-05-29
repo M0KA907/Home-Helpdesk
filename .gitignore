@@ -1,0 +1,11 @@
+# Local-only config/secrets
+config.js
+.env
+.env.*
+*.local
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
