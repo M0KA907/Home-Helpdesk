@@ -59,13 +59,7 @@ Static hosting cannot provide perfect anti-bot protection by itself. This projec
 
 ### 1. Create or use a Google Sheet
 
-You can use the Sheet already created earlier:
-
-```text
-Home Tech Helpdesk Tickets
-```
-
-Or create a new Sheet.
+Use a private Google Sheet. Do not commit its ID.
 
 ### 2. Add Apps Script receiver
 
@@ -138,8 +132,9 @@ Copy the deployment URL.
 
 ### 6. Deploy GitHub Pages
 
+Enable GitHub Pages from the repository settings, or run:
+
 ```bash
-gh repo create M0KA907/Home-Helpdesk --public --source=. --remote=origin --push
 gh api repos/M0KA907/Home-Helpdesk/pages \
   -X POST \
   -f source.branch=main \
@@ -171,6 +166,10 @@ Click save.
 
 Those values are stored in that browser only.
 
+## AI assistance disclosure
+
+This project was created with AI assistance. Raw vibe-coded or unreviewed agent-generated changes from Claude Code, ChatGPT Web, or Codex are not accepted as contributions. See `AI_ASSISTANCE.md` and `CONTRIBUTING.md`.
+
 ## Security notes
 
 The submit key is not committed to the repo. It is still present in the configured browser after setup. Treat it as household anti-spam, not military-grade auth.
@@ -197,6 +196,8 @@ receiver/Code.gs
 receiver/appsscript.json
 README.md
 SECURITY.md
+AI_ASSISTANCE.md
+CONTRIBUTING.md
 LICENSE
 CLAUDE.md
 .github/workflows/static.yml
