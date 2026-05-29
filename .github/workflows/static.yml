@@ -1,0 +1,30 @@
+name: static-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files
+        run: |
+          test -f index.html
+          test -f assets/app.js
+          test -f assets/styles.css
+          test -f receiver/Code.gs
+          test -f SECURITY.md
+          test -f AI_ASSISTANCE.md
+          test -f CONTRIBUTING.md
+          test -f README.md
+      - name: Secret string smoke check
+        run: |
+          ! grep -R "script.google.com/macros/s/" -n . --exclude-dir=.git
+          ! grep -R "AIza" -n . --exclude-dir=.git
+          ! grep -R "BEGIN PRIVATE KEY" -n . --exclude-dir=.git
